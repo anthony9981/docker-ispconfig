@@ -115,7 +115,7 @@ RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi header
 # --- 10.1 Install HHVM (HipHop Virtual Machine)
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
 RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d/hhvm.list
-RUN apt-key -qq update && apt-get -qq update && apt-get -y -qq install hhvm --force-yes
+RUN apt-key update && apt-get -qq update && apt-get -y -qq install hhvm --force-yes
 
 # --- 11 Install Let's Encrypt client (certbot)
 RUN apt-get -y install python-certbot-apache -t jessie-backports
