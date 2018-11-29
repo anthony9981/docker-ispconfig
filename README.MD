@@ -1,3 +1,4 @@
+# ISPConfig for docker with full install php script
 ISPConfig is an Open source, BSD-licensed, hosting control panel for Linux, designed to manage Apache, BIND, FTP, and databases, supporting many Linux distributions.
 
 Installation followed official tutorial : https://www.howtoforge.com/tutorial/perfect-server-debian-8-4-jessie-apache-bind-dovecot-ispconfig-3-1/
@@ -44,6 +45,17 @@ To change root password, access container shell and use following command :
 `mysqladmin -u root -p'oldpassword' password newpassword`
 
 It is strongly recommended that you change the MariaDB and ISPConfig password as soon as possible.
+
+### **PHP Version**
+php 5.3.0, php 5.4.0, php 5.5.0, php 5.6.0, php 7.0.0, php 7.1.0, php 7.2.0
+
+To install new version run
+
+docker exec -i -t ispconfig /usr/bin/installphp <version> <fpm_port>
+
+for example install php 5.6.39 with fpm port 9539:
+
+docker exec -i -t ispconfig /usr/bin/installphp 5.6.39 9539
 
 ### **ROADMAP**
 * Code cleaning and refactoring
