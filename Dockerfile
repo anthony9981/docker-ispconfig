@@ -201,7 +201,9 @@ RUN cp /root/config/ispconfig-autoinstall.ini /tmp/ispconfig3_install/install/au
 RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.vhost && sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.conf
 
 # INSTALL PHP
-RUN cp installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
+ADD ./installphp.sh /usr/bin/installphp.sh
+RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
+
 # PHP 5.3.0
 RUN /usr/bin/installphp 5.3.0 9530
 
