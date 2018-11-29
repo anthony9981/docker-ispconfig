@@ -200,6 +200,32 @@ RUN /bin/bash -c 'sed -i "s/{{ LANG }}/${LOCALE:0:2}/g;s/{{ FQDN }}/${FQDN}/g;s/
 RUN cp /root/config/ispconfig-autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini && service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
 RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.vhost && sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.conf
 
+# INSTALL PHP
+RUN cp installphp.sh /usr/bin/installphp
+# PHP 5.3.0
+RUN /usr/bin/installphp 5.3.0 9530
+
+# PHP 5.4.0
+RUN /usr/bin/installphp 5.4.0 9540
+
+# PHP 5.5.0
+RUN /usr/bin/installphp 5.5.0 9550
+
+# PHP 5.6.0
+RUN /usr/bin/installphp 5.6.0 9560
+
+# PHP 7.0.0
+RUN /usr/bin/installphp 7.0.0 9700
+
+# PHP 7.1.0
+RUN /usr/bin/installphp 7.1.0 9710
+
+# PHP 7.2.0
+RUN /usr/bin/installphp 7.2.0 9720
+
+# PHP 7.2.0
+RUN /usr/bin/installphp 7.2.0 9720
+
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
 
