@@ -115,7 +115,7 @@ RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi header
 # --- 10.1 Install HHVM (HipHop Virtual Machine)
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
 RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d/hhvm.list
-RUN apt-get -qq update && apt-get -y -qq install hhvm
+RUN apt-key -qq update && apt-get -qq update && apt-get -y -qq install hhvm --force-yes
 
 # --- 11 Install Let's Encrypt client (certbot)
 RUN apt-get -y install python-certbot-apache -t jessie-backports
@@ -201,7 +201,7 @@ RUN cp /root/config/ispconfig-autoinstall.ini /tmp/ispconfig3_install/install/au
 RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.vhost && sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.conf
 
 # INSTALL PHP
-RUN cp installphp.sh /usr/bin/installphp
+RUN cp installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
 # PHP 5.3.0
 RUN /usr/bin/installphp 5.3.0 9530
 
