@@ -204,29 +204,27 @@ RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/00
 ADD ./installphp.sh /usr/bin/installphp.sh
 RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
 
-# PHP 5.3.0
+# PHP 5.3.29
 RUN /usr/bin/installphp 5.3.29 9539
 
-# PHP 5.4.0
+# PHP 5.4.40
 RUN /usr/bin/installphp 5.4.40 9540
 
-# PHP 5.5.0
+# PHP 5.5.24
 RUN /usr/bin/installphp 5.5.24 9524
 
-# PHP 5.6.0
+# PHP 5.6.8
 RUN /usr/bin/installphp 5.6.8 9568
 
-# PHP 7.0.0
-RUN /usr/bin/installphp 7.0.0 9700
+# PHP 7.0.30
+RUN /usr/bin/installphp 7.0.30 9700
 
-# PHP 7.1.0
-RUN /usr/bin/installphp 7.1.0 9710
+# PHP 7.1.17
+RUN /usr/bin/installphp 7.1.17 9717
 
-# PHP 7.2.0
-RUN /usr/bin/installphp 7.2.0 9720
+# PHP 7.2.5
+RUN /usr/bin/installphp 7.2.5 9725
 
-# PHP 7.2.0
-RUN /usr/bin/installphp 7.2.0 9720
 
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*

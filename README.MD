@@ -47,7 +47,7 @@ To change root password, access container shell and use following command :
 It is strongly recommended that you change the MariaDB and ISPConfig password as soon as possible.
 
 ### **PHP Version**
-php 5.3.0, php 5.4.0, php 5.5.0, php 5.6.0, php 7.0.0, php 7.1.0, php 7.2.0
+php 5.3.29, php 5.4.40, php 5.5.24, php 5.6.8, php 7.0.30, php 7.1.17, php 7.2.5
 
 To install new version run
 
