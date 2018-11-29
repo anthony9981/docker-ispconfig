@@ -205,16 +205,16 @@ ADD ./installphp.sh /usr/bin/installphp.sh
 RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
 
 # PHP 5.3.0
-RUN /usr/bin/installphp 5.3.0 9530
+RUN /usr/bin/installphp 5.3.29 9539
 
 # PHP 5.4.0
-RUN /usr/bin/installphp 5.4.0 9540
+RUN /usr/bin/installphp 5.4.40 9540
 
 # PHP 5.5.0
-RUN /usr/bin/installphp 5.5.0 9550
+RUN /usr/bin/installphp 5.5.24 9524
 
 # PHP 5.6.0
-RUN /usr/bin/installphp 5.6.0 9560
+RUN /usr/bin/installphp 5.6.8 9568
 
 # PHP 7.0.0
 RUN /usr/bin/installphp 7.0.0 9700
