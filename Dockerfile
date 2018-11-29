@@ -176,7 +176,7 @@ RUN cd /tmp && wget -nv http://olivier.sessink.nl/jailkit/jailkit-2.19.tar.gz &&
 RUN cd /tmp && dpkg -i jailkit_2.19-1_*.deb && rm -rf jailkit*
 
 # --- 18 Install fail2ban and UFW Firewall
-RUN apt-get -qq update && apt-get -y -qq install fail2ban
+RUN apt-get -qq update && apt-get -y -qq install fail2ban --force-yes
 ADD ./fs/etc/fail2ban/jail.local /etc/fail2ban/jail.local
 ADD ./fs/etc/fail2ban/filter.d/pureftpd.conf /etc/fail2ban/filter.d/pureftpd.conf
 ADD ./fs/etc/fail2ban/filter.d/dovecot-pop3imap.conf /etc/fail2ban/filter.d/dovecot-pop3imap.conf
