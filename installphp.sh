@@ -18,6 +18,7 @@ tar jxf php-${VERSION}.tar.bz2
 sudo apt-get install build-essential -y
 #sudo apt-get build-dep php5 -y
 sudo apt-get install libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev -y
+sudo apt-get autoremove -y && sudo apt-get clean
 sudo mkdir /usr/include/freetype2/freetype
 sudo ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
 sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
