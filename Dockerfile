@@ -226,7 +226,7 @@ RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/00
 
 # Install the prerequisites for building PHP
 RUN apt-get -qq update && \
- apt-get --force-yes -qq libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev
+ apt-get install -y -qq libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev
 RUN apt-get autoremove -y && apt-get clean
 RUN mkdir /usr/include/freetype2/freetype
 RUN ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
