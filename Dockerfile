@@ -1,27 +1,3 @@
-docker logo
-
-Search
-Dashboard
-Explore
-Organizations
-Create
- Create Repository
- Create Automated Build
- Create Organization
-anthony9981
-My Profile
-Documentation
-Help
-Settings
-Log out
-PUBLIC | AUTOMATED BUILD
-lspg/ispconfig
-Last pushed: 2 years ago
-Repo Info
-Tags
-Dockerfile
-Build Details
-Dockerfile
 #
 #                    ##        .
 #              ## ## ##       ==
