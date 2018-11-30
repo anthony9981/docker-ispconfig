@@ -133,7 +133,7 @@ COPY ./fs/etc/apache2/conf-available/httpoxy.conf /etc/apache2/conf-available/ht
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi headers && a2enconf httpoxy && a2dissite 000-default && service apache2 restart
 
 # --- 10.1 Install HHVM (HipHop Virtual Machine)
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xb4112585d386eb94
 RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d/hhvm.list
 RUN apt-get -qq update && apt-get -y -qq install hhvm
 
