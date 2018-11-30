@@ -226,39 +226,23 @@ RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/00
 
 # Install the prerequisites for building PHP
 RUN apt-get -qq update && \
- apt-get install -y -qq libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev
-RUN apt-get autoremove -y && apt-get clean
-RUN mkdir /usr/include/freetype2/freetype
-RUN ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
-RUN ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
+apt-get install -y -qq libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev && \
+apt-get autoremove -y && apt-get clean && \
+mkdir /usr/include/freetype2/freetype && \
+ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h && \
+ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
 
 # INSTALL PHP
 ADD ./installphp.sh /usr/bin/installphp.sh
-RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp
-
-# PHP 5.3.29
-RUN /usr/bin/installphp 5.3.29 9539
-
-# PHP 5.4.40
-RUN /usr/bin/installphp 5.4.40 9540
-
-# PHP 5.5.24
-RUN /usr/bin/installphp 5.5.24 9524
-
-# PHP 5.6.8
-RUN /usr/bin/installphp 5.6.8 9568
-
-# PHP 7.0.30
-RUN /usr/bin/installphp 7.0.30 9700
-
-# PHP 7.1.17
-RUN /usr/bin/installphp 7.1.17 9717
-
-# PHP 7.2.5
-RUN /usr/bin/installphp 7.2.5 9725
-
-# Restart apache
-RUN service apache2 restart
+RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp && \
+/usr/bin/installphp 5.3.29 9539 && \
+/usr/bin/installphp 5.4.40 9540 && \
+/usr/bin/installphp 5.5.24 9524 && \
+/usr/bin/installphp 5.6.8 9568 && \
+/usr/bin/installphp 7.0.30 9700 && \
+/usr/bin/installphp 7.1.17 9717 && \
+/usr/bin/installphp 7.2.5 9725 && \
+service apache2 restart
 
 # Add to mysql
 ADD ./addphptoisp.sh /usr/bin/addphptoisp.sh
