@@ -1,6 +1,9 @@
 #!/bin/bash
+array=($@)
+len=${#array[@]}
+_args=${array[@]:0:$len}
 
-for i in "5.3.29" "5.4.40" "5.5.24" "5.6.8" "7.0.30" "7.1.17" "7.2.5"
+for i in _args
 do
   # Insert to ISPConfig database
   if [[ ${i:0:1} -eq 7 ]]; then

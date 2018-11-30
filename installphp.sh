@@ -12,17 +12,6 @@ cd /usr/local/src/php${VERSION:0:1}-build
 wget ${PHP_REPO}php-${VERSION}.tar.bz2 -O php-${VERSION}.tar.bz2
 tar jxf php-${VERSION}.tar.bz2
 
-
-
-# Install the prerequisites for building PHP5
-sudo apt-get install build-essential -y
-#sudo apt-get build-dep php5 -y
-sudo apt-get install libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev -y
-sudo apt-get autoremove -y && sudo apt-get clean
-sudo mkdir /usr/include/freetype2/freetype
-sudo ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
-sudo ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
-
 # Install OpenSSL
 # In order to use the OpenSSL functions you need to install the » OpenSSL library.
 # PHP 5 requires at least OpenSSL >= 0.9.6.
@@ -198,18 +187,3 @@ insserv php-${VERSION}-fpm
 
 # Finally start PHP-FPM
 sudo /etc/init.d/php-${VERSION}-fpm start
-
-# Insert to ISPConfig database
-if [ ${VERSION:0:1} -eq 7 ]; then
-	mysql -uroot -ppassword -hlocalhost dbispconfig -e "insert into server_php (sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) values (1, 1, 'ruid', 'ruid', '', 1, 0, 'PHP ${VERSION}', '/etc/init.d/php-${VERSION}-fpm', '/opt/php-${VERSION}/lib', '/opt/php-${VERSION}/etc/php-fpm.d');"
-fi
-if [ ${VERSION:0:1} -eq 5 ]; then
-	mysql -uroot -ppassword -hlocalhost dbispconfig -e "insert into server_php (sys_userid, sys_groupid, sys_perm_user, sys_perm_group, sys_perm_other, server_id, client_id, name, php_fpm_init_script, php_fpm_ini_dir, php_fpm_pool_dir) values (1, 1, 'ruid', 'ruid', '', 1, 0, 'PHP ${VERSION}', '/etc/init.d/php-${VERSION}-fpm', '/opt/php-${VERSION}/lib', '/opt/php-${VERSION}/etc/pool.d');"
-fi
-# Restart apache
-sudo service apache2 restart
-# Print ISPConfig setup manual
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-printf "${NC}ALL DONE! YOU HAD INSTALLED ${RED}php ${VERSION}${GREEN} SUCCESS!!\n${NC}"

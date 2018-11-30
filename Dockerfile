@@ -1,3 +1,47 @@
+docker logo
+
+Search
+Dashboard
+Explore
+Organizations
+Create
+ Create Repository
+ Create Automated Build
+ Create Organization
+anthony9981
+My Profile
+Documentation
+Help
+Settings
+Log out
+PUBLIC | AUTOMATED BUILD
+lspg/ispconfig
+Last pushed: 2 years ago
+Repo Info
+Tags
+Dockerfile
+Build Details
+Dockerfile
+#
+#                    ##        .
+#              ## ## ##       ==
+#           ## ## ## ##      ===
+#       /""""""""""""""""\___/ ===
+#  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+#       \______ o          __/
+#         \    \        __/
+#          \____\______/
+#
+#          |          |
+#       __ |  __   __ | _  __   _
+#      /  \| /  \ /   |/  / _\ |
+#      \__/| \__/ \__ |\_ \__  |
+#
+# Dockerfile for ISPConfig 3
+#
+# https://www.howtoforge.com/tutorial/perfect-server-debian-8-4-jessie-apache-bind-dovecot-ispconfig-3-1
+#
+
 FROM debian:jessie
 
 MAINTAINER Loïs PUIG <lois.puig@kctus.fr> version: 0.1
@@ -113,9 +157,9 @@ COPY ./fs/etc/apache2/conf-available/httpoxy.conf /etc/apache2/conf-available/ht
 RUN a2enmod suexec rewrite ssl actions include dav_fs dav auth_digest cgi headers && a2enconf httpoxy && a2dissite 000-default && service apache2 restart
 
 # --- 10.1 Install HHVM (HipHop Virtual Machine)
-RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xB4112585D386EB94
+RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449
 RUN echo deb http://dl.hhvm.com/debian jessie main | tee /etc/apt/sources.list.d/hhvm.list
-RUN apt-key update && apt-get -qq update && apt-get -y -qq install hhvm --force-yes
+RUN apt-get -qq update && apt-get -y -qq install hhvm
 
 # --- 11 Install Let's Encrypt client (certbot)
 RUN apt-get -y install python-certbot-apache -t jessie-backports
@@ -176,7 +220,7 @@ RUN cd /tmp && wget -nv http://olivier.sessink.nl/jailkit/jailkit-2.19.tar.gz &&
 RUN cd /tmp && dpkg -i jailkit_2.19-1_*.deb && rm -rf jailkit*
 
 # --- 18 Install fail2ban and UFW Firewall
-RUN apt-get -qq update && apt-get -y -qq install fail2ban --force-yes
+RUN apt-get -qq update && apt-get -y -qq install fail2ban
 ADD ./fs/etc/fail2ban/jail.local /etc/fail2ban/jail.local
 ADD ./fs/etc/fail2ban/filter.d/pureftpd.conf /etc/fail2ban/filter.d/pureftpd.conf
 ADD ./fs/etc/fail2ban/filter.d/dovecot-pop3imap.conf /etc/fail2ban/filter.d/dovecot-pop3imap.conf
@@ -199,6 +243,13 @@ RUN /bin/bash -c 'sed -i "s/{{ LANG }}/${LOCALE:0:2}/g;s/{{ FQDN }}/${FQDN}/g;s/
 # Install ISPConfig
 RUN cp /root/config/ispconfig-autoinstall.ini /tmp/ispconfig3_install/install/autoinstall.ini && service mysql restart && php -q /tmp/ispconfig3_install/install/install.php --autoinstall=/tmp/ispconfig3_install/install/autoinstall.ini
 RUN sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.vhost && sed -i 's/^NameVirtualHost/#NameVirtualHost/g' /etc/apache2/sites-enabled/000-ispconfig.conf
+
+# Install the prerequisites for building PHP
+RUN apt-get -qq update && apt-get -y --qq build-dep php5 build-essential libxml2 libxml2-dev libbz2-dev libcurl4-gnutls-dev libfcgi-dev libfcgi0ldbl libjpeg62-turbo-dbg libjpeg62-turbo-dev libpng12-dev libkrb5-dev libmcrypt-dev libssl-dev libfreetype6-dev libc-client2007e libc-client2007e-dev libxslt1-dev
+RUN apt-get autoremove -y && apt-get clean
+RUN mkdir /usr/include/freetype2/freetype
+RUN ln -s /usr/include/freetype2/freetype.h /usr/include/freetype2/freetype/freetype.h
+RUN ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
 
 # INSTALL PHP
 ADD ./installphp.sh /usr/bin/installphp.sh
@@ -225,6 +276,12 @@ RUN /usr/bin/installphp 7.1.17 9717
 # PHP 7.2.5
 RUN /usr/bin/installphp 7.2.5 9725
 
+# Restart apache
+RUN service apache2 restart
+
+# Add to mysql
+ADD ./addphptoisp.sh /usr/bin/addphptoisp.sh
+RUN /bin/bash -c /usr/bin/addphptoisp.sh "5.3.29" "5.4.40" "5.5.24" "5.6.8" "7.0.30" "7.1.17" "7.2.5"
 
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
