@@ -106,6 +106,7 @@ RUN service postfix restart && service mysql restart
 
 # --- 9 Install Amavisd-new, SpamAssassin And Clamav
 RUN apt-get -qq update && apt-get -y -qq install amavisd-new spamassassin clamav clamav-daemon zoo unzip bzip2 arj nomarch lzop cabextract apt-listchanges libnet-ldap-perl libauthen-sasl-perl clamav-docs daemon libio-string-perl libio-socket-ssl-perl libnet-ident-perl zip libnet-dns-perl postgrey
+RUN apt-get autoremove -y && apt-get clean
 ADD ./fs/etc/clamav/clamd.conf /etc/clamav/clamd.conf
 ADD ./fs/etc/clamav/freshclam.conf /etc/clamav/freshclam.conf
 RUN chown root:clamav /etc/clamav/clamd.conf && chmod g+r /etc/clamav/clamd.conf
@@ -113,10 +114,12 @@ RUN mkdir -p /var/mail/postgrey && chown -R postgrey:postgrey /var/mail/postgrey
 RUN mkdir -p /var/run/clamav && chown -R clamav: /var/run/clamav
 RUN service spamassassin stop && systemctl disable spamassassin &>/dev/null && freshclam
 
+
 # --- 9.1 Install Metronome XMPP Server
 RUN echo "deb http://packages.prosody.im/debian jessie main" > /etc/apt/sources.list.d/metronome.list
 RUN wget http://prosody.im/files/prosody-debian-packages.key -O - | apt-key add -
 RUN apt-get -qq update && apt-get -y -qq install git lua5.1 liblua5.1-0-dev lua-filesystem libidn11-dev libssl-dev lua-zlib lua-expat lua-event lua-bitop lua-socket lua-sec luarocks luarocks
+RUN apt-get autoremove -y && apt-get clean
 RUN luarocks install lpc
 RUN adduser --no-create-home --disabled-login --gecos 'Metronome' metronome
 RUN cd /opt && git clone https://github.com/maranda/metronome.git metronome
