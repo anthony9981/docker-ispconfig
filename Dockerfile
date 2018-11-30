@@ -245,8 +245,9 @@ RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installph
 service apache2 restart
 
 # Add to mysql
-ADD ./addphptoisp.sh /usr/bin/addphptoisp.sh
-RUN /bin/bash -c /usr/bin/addphptoisp.sh "5.3.29" "5.4.40" "5.5.24" "5.6.8" "7.0.30" "7.1.17" "7.2.5"
+ADD ./addphptoisp.sh /usr/bin/addphptoisp
+
+RUN chmod +x /usr/bin/addphptoisp && /usr/bin/addphptoisp "5.3.29" "5.4.40" "5.5.24" "5.6.8" "7.0.30" "7.1.17" "7.2.5"
 
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
