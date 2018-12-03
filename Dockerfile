@@ -236,6 +236,7 @@ ln -s /usr/lib/libc-client.a /usr/lib/x86_64-linux-gnu/libc-client.a
 
 # INSTALL PHP
 ADD ./installphp.sh /usr/bin/installphp.sh
+
 RUN cp /usr/bin/installphp.sh /usr/bin/installphp && chmod +x /usr/bin/installphp && \
 /usr/bin/installphp 5.3.29 9539 && \
 /usr/bin/installphp 5.4.40 9540 && \
@@ -248,14 +249,14 @@ service apache2 restart
 
 # Add to mysql
 ADD ./addphptoisp.sh /usr/bin/addphptoisp
+ADD ./php-VERSION-fpm /tmp/php-VERSION-fpm
 
 RUN chmod +x /usr/bin/addphptoisp && /usr/bin/addphptoisp "5.3.29" "5.4.40" "5.5.24" "5.6.8" "7.0.30" "7.1.17" "7.2.5"
+
+# Fix startup script
+ADD ./startup /usr/local/bin/startup
 
 # CLEANING
 RUN apt-get autoremove -y && apt-get clean && rm -rf /tmp/*
 
-#EXPOSE 20/tcp 21/tcp 22/tcp 53 80/tcp 443/tcp 953/tcp 8080/tcp 3306 9001/tcp
-#
-#VOLUME ["/var/www/","/var/mail/","/var/backups/","/var/lib/mysql","/etc/","/usr/local/ispconfig","/var/log/"]
-#
-#CMD ["/bin/bash", "/usr/local/bin/startup"]
+CMD ["/bin/bash", "/usr/local/bin/startup"]
